@@ -1,0 +1,86 @@
+Docker:
+-------
+
+Application development:
+-> collection of programs is called as a software project
+-> software project contains serveral components
+    1) forntend components (UI) 
+    2) backend components (Business Logic)
+    3) database components (Persistence Logic)
+
+
+       ui   ----------------   web components  ------------ business components  ----------- persistent components    ---------> Databases
+-------forntend-----------        ----------------------------------Backend------------------------------------------------              MySQL,PLSQL, MongoDB
+    - HTML, CSS, JS, Jquery, Bootstrap                       -   java, Django
+
+For developing different application we need different software to install.
+Eg: HTML,CSS, JS, Jquery, Bootstrap, JAVA 1.8v ,MySQL etc. 
+We have different environment for building end to end project.
+These are the different environment->
+    - Dev environment java 11
+    - SIT environment java 1.5 ( tester system integration test  )
+    - UAT environment Java 13
+    - Pilot environment ( pre prod environment)
+    - Production environment Java 1.6 ( Live environment )
+for example : Dev environment: linux, Java 1.8v + spring boot 3+ Mysql 8.5
+we have to install all the above application in all environments.
+if we install software in different environment there is high chance of getting errors.
+so we need docker containerization concept which will help us to build and deploy 
+our applications easily without installing any other dependencies on system level .
+
+- In order to deploy our application in machine we need to setup all 
+the software which are required to our application.
+Ex: OS, Java 1.8v, Mysql, Tomcat web server 9.0V etc.
+
+- In realtime project should be deployed into multiple environments for testing purpose.
+Ex: Dev, SIT, UAT, PILOT, Production
+    -   Dev env will be used by development to perform integration testing
+    - SIT env is used by testing team to test functionality of the application.
+    - UAT env is used to by client to test functionality of the application
+    - PILOT env means pre-Production testing env
+    - Production env is live environment
+
+
+    - Devployment this are in different environment is difficult to manage.
+    - Compatability issues
+    - To deploy application to these many environment we need to take of all the software required to run our application in all environment. It is very difficult task.
+
+
+Docker:
+    - Docker is set of platforms as a service products that use OS-level virtualization to deliver software packages called containers.
+
+
+
+
+virtualization:
+--------------
+- Installing multiple guest operation system in one host operation system.
+- Hypervisor is used to achieve this.
+- It is old technique to run the application.
+- We need to install all the required softwares in HOST OS to run our application-> system performance will become slow in this process,
+- Virtual Machine(VM): it is new technology to virtualize hardware resources.
+
+- To overcome the problems of virtualization we are going for containerization concept.
+
+
+containerization:
+----------------
+- It is used to package all the software and application code in one container for execution.
+- container will take care of everything which is required to run our application.
+- we can run the containers in multiple machine easily.
+- docker is containerization software.
+- Using docker we will create container for our application
+- Using docker we can create image for our application
+- Docker Images we can share easily to multiple machine.
+- Using docker image we can create docker container and we can execute it.
+
+
+
+                                          -------- Docker container (machine 1)
+        App with docker ---- docker image -------- Docker container (machine 2) 
+                                          -------- Docker container (machine 3)
+
+Docker will take care of dependencies.
+Docker is a containerization software.
+Docker will take care of application and application dependencies for execution
+deployment into multiple environment will become easy if we use docker containers concept

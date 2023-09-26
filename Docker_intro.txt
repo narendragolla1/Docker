@@ -62,6 +62,18 @@ virtualization:
 
 - To overcome the problems of virtualization we are going for containerization concept.
 
+Advantages:
+-----------
+- multiple Os in same machine
+- Easy maintenace and recovery
+Lower total cost of ownership
+
+Disadvantages:
+--------------
+- Multiple VMs lead to unstable performance
+- Hypervisor are not as efficient as host Os
+- Long boot-up process
+
 
 containerization:
 ----------------
@@ -74,7 +86,11 @@ containerization:
 - Docker Images we can share easily to multiple machine.
 - Using docker image we can create docker container and we can execute it.
 
-
+Advantages:
+-----------
+Containers on same OS kernel are lighter and smaller
+Better resource utilization campared to VMs
+Short boot-up process 
 
                                           -------- Docker container (machine 1)
         App with docker ---- docker image -------- Docker container (machine 2) 
@@ -84,3 +100,142 @@ Docker will take care of dependencies.
 Docker is a containerization software.
 Docker will take care of application and application dependencies for execution
 deployment into multiple environment will become easy if we use docker containers concept
+
+
+
+
+Application development stack:
+------------------------------
+- HTML content and templates
+- CSS style sheets
+- JavaScript including frameworks such as Angular or reactjs
+- Build tools such as maven and Gradle
+- Web server such as Apache
+- Server-side runtime and frameworks including nodejs, PHP, python, Ruby, .net, Java etc
+- Databases such as MySQL, Maria DB, SQL server, MongoDB
+-Other services for caching and message queues (Redis, Kafka)
+- Git and Github for source control
+
+
+We have to execute our application in multiple machine.
+How do we know it will on all machine?
+If any changes happen then how do we update that change across machines?
+What about security issues?
+
+
+Issues with development Stack setup:
+------------------------------------
+- You use a MacOS, they use Windows
+- You developed the app usign java 1.8v and they have java 11v installed.
+-you used MongoDB v3.6 they are using v4.2
+
+
+
+What is Docker?
+- Docker is a platform for packing, deploying and running applciation.
+- Docker enables you to separate your application from your infrastructure so you can deliver software quickly.
+- Docker package software into standardized units called containers that have everything the software needs to run including libraries, system tools code and runtime.
+- It helps you build applications faster by providing an isolated environment where your code runs without affecting other apps on your system.
+- By taking advantages of docker methodologies for shipping, testing and deploying code quickly you can significantly reduce the delay between writing code and running it in production.
+
+
+
+Docker Architecture:
+--------------------
+![docker architecture](https://www.tutorialspoint.com/docker/images/docker_architecture.jpg)
+- Docker uses client -server model where client talks to server over REST API.
+- Client can be local system like your laptop or remote system like AWS EC2 instance.
+- The client sends request to server which executes instructions given by user.
+- Server builds an image from Dockerfile provided by user.
+- Image contains everything required to run the application i.e binaries, libraries, configuration files, scripts etc..
+- Image contains everything required to run the container.
+- Container runs applications inside images created by users.
+
+
+
+            Docker file --------> Docker image  ----------> Docker Container
+                         Build                     Run 
+
+Docker terminology:
+------------------
+- Image: It's read only template of OS environment.
+- Container : A single process running within docker image.
+- Dockerfile: Contains set of commands needed to build docker image.
+- Registry: Is a place where you store your docker images.
+- Repository: Repository is collection of related docker images.
+- Tag: Tag is name given to each version of repository.
+- Push & Pull  : Push command uploads new image into registry whereas pull downloads existing image from registry.
+
+
+ Docker commands:
+ ----------------
+ | Command | Description | Example |
+ |:--------|:------------|---------|
+ | `docker pull` | Pulls down an image form registry into local machine.| `docker pull ubuntu`|
+ | `docker push` | Pushes up an image in local machine to registry.| `docker push myimage`|
+ | `docker search` | Searches for available images on registries based on keywords entered as argument.| `docker search mysql`|
+ | `docker search` | Searches through all repositories on hub.docker.com for specified keyword(s).| `docker search mysql`|
+ | `docker search` | Searches through available repositories on hub.docker.io.| `docker search mysql`|
+ | `docker login` | Logs into hub.docker.io so that we can upload our own images there.| `docker login --username=my
+ | `docker login` | Logs into registry with username & password.| `docker login --username=myname --password=<PASSWORD>`|
+ | `docker rmi` | Removes one or more images from local machine.| `docker rmi <IMAGE ID>`|
+ | `docker rm` | Remove one ore more containers from local machine.| `docker rm $(docker ps -a -q)`|
+ | `docker inspect` | Inspects one or more images present locally or remotely.| `docker inspect --format='{{json .Config}}
+ | `docker create` | Creates new container without starting it.| `docker create --name=mycontainer nginx`|
+ | `docker start` | Starts existing stopped container.| `docker start mycontainer`|
+ | `docker stop` | Stops currently running container.| `docker stop mycontainer`|
+ | `docker inspect` | Inspects current state and configuration of any object.| `docker inspect mycontainer`|
+
+
+ Install Docker software:
+ -----------------------
+ In ec2 instance(Amazon linux machine):
+                       sudo yum update -y
+                       sudo yum install docker -y   // install docker into amazon linux
+                       
+                       
+Add user to docker group by executing below command
+                        sudo usermod -aG docker ec2-user
+
+                        sudo service docker start
+                        docker info // check docker info
+
+                   // restart session
+                        exit
+                        docker info
+
+
+Docker Command:
+---------------
+1) To run the hello world example, execute following command
+```bash
+$ docker run busybox echo "Hello World"  # Run 'echo' command inside 'busybox' image
+Hello World                                # Output should be Hello World
+```
+
+// See docker info
+docker info
+
+// to see docker images execute below command
+docker image
+
+// pulling hello-world docker image
+docker pull hello-world
+
+// docker version
+docker -v
+
+// for login into docker account (we need to create docker account )
+docker login
+
+// for list of img commands used in docker 
+docker help
+
+
+docker pull <image-id>
+docker run <image-id>
+docker build
+docker tag
+docker push
+docker rmi <image-id>
+docker ps

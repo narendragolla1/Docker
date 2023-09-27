@@ -232,10 +232,71 @@ docker login
 docker help
 
 
-docker pull <image-id>
-docker run <image-id>
+docker pull <image-id>  # download that image (docker pull mysql)
+docker run <image-id> # check the image is present in local or not(if not downloaded it will download i.e, pull that image ) and then run that image 
 docker build
 docker tag
 docker push
-docker rmi <image-id>
+docker rmi <image-id>  # delete that image 
 docker ps
+
+
+                            build                           run
+                Dockerfile --------------> Docker image  --------------> Docker container
+                                                |
+                                                |
+                                                |
+                                                |
+                                            docker hub
+ 
+ Docker terminology:
+ --------------------
+Dockerfile: Dockerfile contains instructions to create an image. it contain docker domain specific keywords to build image
+Docker Image: Docker image is package which contains everything(App code+ software +env+ libraries)
+Docker container:Docker container is run time instance of docker image. Our application will execute in docker container 
+Docker registry(Docker hub ): it is a place where we store docker images.
+Docker engine(Docker demon):It is a software using which we will create docker images and docker container 
+
+- Docker hub is public registry.
+- In private company Nexus, Jforg, D.T.R, AWS ECR are private registries.
+
+
+How to create our own docker image?
+=---------------------------------=
+1. we need a Dockerfile
+login into docker hub
+                        docker login
+Create a Dockerfile
+    vi Dockerfile
+    Insert Dockerfile
+        FROM ubantu
+        RUN echo "Run One"
+        RUN echo "Run Two"
+        CMD echo "Echo from Image"
+        CMD echo "Echo from Latest"
+        CMD echo "Run Three"
+
+    To build docker image, dockerfile is needed.
+    docker build -t myfirstimage .
+    docker build is to build our first image.
+    -t is to tell our image name
+    myfirstimage is the name of our docker image
+    . tells to search from currect directory
+
+
+                                 build    (myfirstimage)      run
+                Dockerfile --------------> Docker image  --------------> Docker container
+                                                |
+                                                |  (push)
+                                                |
+                                                |
+                                            docker hub
+                                            (public repo)
+    docker run myfirstimage 
+    o/p: Echo from last 
+
+    myfirstimage is now in local machine.
+    we can store image in our docker hub account.
+    - docker tag myfirstimage narendra/myfirstimage
+    - docker push narendra/myfirstimage
+    before pushing into docker hub we need to tag that image.

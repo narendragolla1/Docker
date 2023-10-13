@@ -32,15 +32,13 @@ our applications easily without installing any other dependencies on system leve
 the software which are required to our application.
 Ex: OS, Java 1.8v, Mysql, Tomcat web server 9.0V etc.
 
-- In realtime project should be deployed into multiple environments for testing purpose.
+- In realtime project, we should be deployed into multiple environments for testing purpose.
 Ex: Dev, SIT, UAT, PILOT, Production
     -   Dev env will be used by development to perform integration testing
     - SIT env is used by testing team to test functionality of the application.
     - UAT env is used to by client to test functionality of the application
     - PILOT env means pre-Production testing env
     - Production env is live environment
-
-
     - Devployment this are in different environment is difficult to manage.
     - Compatability issues
     - To deploy application to these many environment we need to take of all the software required to run our application in all environment. It is very difficult task.
@@ -113,7 +111,7 @@ Application development stack:
 - Web server such as Apache
 - Server-side runtime and frameworks including nodejs, PHP, python, Ruby, .net, Java etc
 - Databases such as MySQL, Maria DB, SQL server, MongoDB
--Other services for caching and message queues (Redis, Kafka)
+- Other services for caching and message queues (Redis, Kafka)
 - Git and Github for source control
 
 
@@ -134,9 +132,12 @@ Issues with development Stack setup:
 What is Docker?
 - Docker is a platform for packing, deploying and running applciation.
 - Docker enables you to separate your application from your infrastructure so you can deliver software quickly.
-- Docker package software into standardized units called containers that have everything the software needs to run including libraries, system tools code and runtime.
-- It helps you build applications faster by providing an isolated environment where your code runs without affecting other apps on your system.
-- By taking advantages of docker methodologies for shipping, testing and deploying code quickly you can significantly reduce the delay between writing code and running it in production.
+- Docker package software into standardized units called containers that have everything the software needs to 
+    run including libraries, system tools code and runtime.
+- It helps you build applications faster by providing an isolated environment where your code runs without 
+    affecting other apps on your system.
+- By taking advantages of docker methodologies for shipping, testing and deploying code quickly
+     you can significantly reduce the delay between writing code and running it in production.
 
 
 
@@ -208,7 +209,6 @@ Add user to docker group by executing below command
 Docker Command:
 ---------------
 1) To run the hello world example, execute following command
-```bash
 $ docker run busybox echo "Hello World"  # Run 'echo' command inside 'busybox' image
 Hello World                                # Output should be Hello World
 ```
@@ -278,9 +278,9 @@ Create a Dockerfile
 
     To build docker image, dockerfile is needed.
     docker build -t myfirstimage .
-    docker build is to build our first image.
-    -t is to tell our image name
-    myfirstimage is the name of our docker image
+    ------ "docker build" is to build our first image. --------
+    "-t" is to tell our image name
+    " myfirstimage " is the name of our docker image
     . tells to search from currect directory
 
 
@@ -300,3 +300,4 @@ Create a Dockerfile
     - docker tag myfirstimage narendra/myfirstimage
     - docker push narendra/myfirstimage
     before pushing into docker hub we need to tag that image.
+

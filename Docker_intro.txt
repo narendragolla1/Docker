@@ -235,7 +235,7 @@ docker run <image-id> # check the image is present in local or not(if not downlo
 docker build
 docker tag
 docker push
-docker rmi <image-id>  # delete that image 
+docker rmi -f <image-id>  # delete that image 
 docker ps
 
 
@@ -436,17 +436,8 @@ EXPOSE: It represent on which port number our container is running.
 - EXPOSE command must come before any RUN commands that need access from outside of the container.
 
 
-
-
-
-
-
-
-
-
-
-
-
+VOLUME: It is used for data storage.
+-------
 
 Docker File Best Practices
 --------------------------
@@ -461,15 +452,6 @@ Docker File Best Practices
 8. If possible try to keep layers small by combining RUN commands into single command with && or || operators.
 9. Add comments for better understanding purpose.
 10. Don’t add any extra layer if you don't need them.
-
-
-
-
-
-
-
-
-
 *FROM : Sets base image for new Docker image.
 *RUN : Executes command on current image and creates layer with result.
 *CMD : Specifies default commands which should be executed when running this image as container.

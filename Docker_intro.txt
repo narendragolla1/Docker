@@ -1,16 +1,15 @@
 Docker:
 -------
-
 Application development:
 -> collection of programs is called as a software project
 -> software project contains serveral components
-    1) forntend components (UI) 
-    2) backend components (Business Logic)
-    3) database components (Persistence Logic)
+    (1) forntend components (UI) 
+    (2) backend components (Business Logic)
+    (3) database components (Persistence Logic)
 
 
        ui   ----------------   web components  ------------ business components  ----------- persistent components    ---------> Databases
--------forntend-----------        ----------------------------------Backend------------------------------------------------              MySQL,PLSQL, MongoDB
+-------frontend-----------        ----------------------------------Backend------------------------------------------------              MySQL,PLSQL, MongoDB
     - HTML, CSS, JS, Jquery, Bootstrap                       -   java, Django
 
 For developing different application we need different software to install.
@@ -211,7 +210,6 @@ Docker Command:
 1) To run the hello world example, execute following command
 $ docker run busybox echo "Hello World"  # Run 'echo' command inside 'busybox' image
 Hello World                                # Output should be Hello World
-```
 
 // See docker info
 docker info
@@ -249,8 +247,8 @@ docker ps
                                                 |
                                             docker hub
  
- Docker terminology:
- --------------------
+Docker terminology:
+--------------------
 Dockerfile: Dockerfile contains instructions to create an image. it contain docker domain specific keywords to build image
 Docker Image: Docker image is package which contains everything(App code+ software +env+ libraries)
 Docker container:Docker container is run time instance of docker image. Our application will execute in docker container 
@@ -344,7 +342,7 @@ ADD <source> <destination>
 ADD <url-to-download> <destination>
 
 What is the difference between COPY and ADD?
---------------------------
+--------------------------------------------
 
 RUN: It is used to execute commands on top of base image.
 --- 
@@ -369,7 +367,7 @@ EX: CMD sudo start tomcat
 
 
 Demo Dockerfile:
----------
+----------------
 
 FROM ubantu # it will download lastest ubantu image.
 MAINTAINER Narendra
@@ -378,6 +376,64 @@ RUN echo "Run Two"
 CMD echo " CMD One"
 RUN echo "Run three"
 
+# build image using docker file
+docker build -t imageone
+
+# Run image
+docker run imageone
+
+Note: CMD instruction we can override using runtime CMD
+
+# it will print only date (CMD will not execute)
+docker run imageone date 
+
+
+How to change docker file name?
+-------------------------------
+We can change the docker file name.
+$ mv Dockerfile Dockerfile_One
+$ docker build -f Dockerfile_One -t imagetwo .
+-f tell the file name 
+-t tell the image name 
+
+ENTRYPOINT: ENTRYPOINT instruction will execute while creating container
+-----------
+Note: CMD instruction we can override where as ENTRYPOINT instruction we can't override.
+Eg: ENTRYPOINT ["echo","Welcome to Narendra world"]
+ 
+WORKDIR: It is used to set working directory for an image / container 
+--------
+EX: WORKDIR <DIR-PATH>
+Note: The Dockerfile instruction which are avaiable after WORKDIR those instruction will be process from given working directory.
+
+ENV: ENV is used to set environment variables.
+----
+syntax: ENV <key> <value>
+EX: ENV NAME NARENDRA
+
+LABEL: It is used to add meta data in key value pair. it will represent data in key value pair.
+----- 
+EX: LABEL branchName release
+
+ARG: It is used to avoid hard coded values in Dockerfile
+----
+Ex: ARG branch=developed
+LABEL branch $branch
+Note: we can argument values in runtime.
+$ docker build -t imageone --build-arg branch=feature.
+
+
+USER: We can set user for an image/container.
+-----
+Note: After USER instruction, remaining instructions will be processed with given USER.
+Syntax : USER <user-name or UID>[:<group>]
+
+
+EXPOSE: It represent on which port number our container is running. 
+-------
+- It is just like a documenation to understand container running port number.
+- If you want to expose multiple ports then use comma separated format. Expose 80,4321 etc..
+- EXPOSE command must come before any RUN commands that need access from outside of the container.
 
 
 
@@ -388,6 +444,23 @@ RUN echo "Run three"
 
 
 
+
+
+
+
+Docker File Best Practices
+--------------------------
+1. Always use official base ima ges.
+2. Use COPY instead of ADD because COPY supports remote url and tar files where ADD does not support.
+3. Avoid installing unnecessary packages, this increases size of your final image unnecessarily.
+4. If you are adding any new user then add that user at first line after FROM statement so that all commands get executed with same privileges.
+4. Do not install development tools like gcc/g++ etc inside a production environment as they are huge.
+5. Keep Dockerfile easy to read and maintainable.
+6. Make sure you have proper version control for all your code changes so that if any issue occurs then you can easily revert back to previous working state
+7. Don’t put secrets or passwords into source code repository. Instead create an external secret store that is mounted at /run/secrets/<secret
+8. If possible try to keep layers small by combining RUN commands into single command with && or || operators.
+9. Add comments for better understanding purpose.
+10. Don’t add any extra layer if you don't need them.
 
 
 

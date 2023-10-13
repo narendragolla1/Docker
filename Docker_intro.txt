@@ -197,7 +197,7 @@ Docker terminology:
                        
 Add user to docker group by executing below command
                         sudo usermod -aG docker ec2-user
-
+                            // to start docker 
                         sudo service docker start
                         docker info // check docker info
 
@@ -301,3 +301,110 @@ Create a Dockerfile
     - docker push narendra/myfirstimage
     before pushing into docker hub we need to tag that image.
 
+
+
+DockerFile:
+-----------
+- Dockerfile contains instructions to build docker image.
+- In dockerfile we will use DSL(Domain specfic Language) keywords.
+- Docker engine will process Dockerfile instructions from top to bottom.
+- Bellow are docker file keywords
+        FROM, MAINTAINER, COPY, ADD, RUN, CMD, ENTRYPOINT, ENV, LABEL, USER, WORKDIR, EXPOSE, VOLUME
+
+
+FROM: it indicates base image to run our application. On top of the base image we will create our own image.
+-----
+Syntax: FROM <image-name>
+example: 
+FROM   java:jdk-1.8.0
+FROM    tomcat:9.2
+FROM   mysql     
+- If we dont tell version it will take latest version.         
+
+MAINTAINER : It's used for giving authorship information about an image.
+------------
+syntax: MAINTAINER "<NAME>" <<EMAIL>>
+example: MAINTAINER Narendra "<narendra@gmail.com>"
+- MailId is optional.
+
+COPY:It is used to copy files/ folder to image while creating an image.
+-----
+Syntax: COPY <source> <destination>
+copying war file from target directory to tomcat/webapps directory. 
+Eg: COPY target/maven-web-app.war /local/tomcat/webapp/maven-web-app.war
+
+
+ADD:    It is also used to copy files to image while creating an image.
+====
+- Add keyword can download files from remote location (http)
+- add keyword will extract tar file while copying to image.
+
+Syntax:
+ADD <source> <destination>
+ADD <url-to-download> <destination>
+
+What is the difference between COPY and ADD?
+--------------------------
+
+RUN: It is used to execute commands on top of base image.
+--- 
+- Run command instruction will execute while creating an image.
+- we can write multiple RUN instruction, they will execute in the order (from top to bottom)
+Ex; RUN mkdir workspace , RUN yum install git 
+
+CMD: This instruction tells which command should be executed when container runs as a daemon.
+====
+- This is default command which executes when container starts up in interactive mode or detached mode.
+ 
+                    build               run
+        Dockerfile ------> docker image ---> Docker container 
+                    download git        start tomcat server 
+                        (RUN)               (CMD) 
+                    while creating image        while creating container 
+
+container creating means application execution.
+EX: CMD sudo start tomcat
+- we can multiple CMD instructions in DockerFile but docker will process only last CMD instruction.
+- There no use of writing multiple CMD instructions in Dockerfile.
+
+
+Demo Dockerfile:
+---------
+
+FROM ubantu # it will download lastest ubantu image.
+MAINTAINER Narendra
+RUN echo "Run one"
+RUN echo "Run Two"
+CMD echo " CMD One"
+RUN echo "Run three"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*FROM : Sets base image for new Docker image.
+*RUN : Executes command on current image and creates layer with result.
+*CMD : Specifies default commands which should be executed when running this image as container.
+*EXPOSE : Exposes port inside the container without publishing it to host system's ports.
+*ENV : Defines environment variable within the scope of an instruction or Dockerfile.
+*ADD : Copies files or directories from <src> location to destination path specified by <dest>.
+*COPY : Similar to ADD but does not allow wildcards like * , ** etc..
+*VOLUME : Creates mount point for externally mounted volumes or named volume.
+*WORKDIR : Changes working directory where all subsequent commands would execute.
+*ARG : Used to pass a value at build time.
+*ONBUILD : Adds trigger instruction when used with other instructions such as FROM, COPY, WORKDIR, USER, ONBUILD triggers another instruction whenever the

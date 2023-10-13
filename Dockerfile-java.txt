@@ -1,0 +1,24 @@
+FROM java:8-jdk-apline
+
+# java 8 will be my base image
+
+COPY ./target/spring-boot-docker-app.jar /usr/app/
+
+WORKDIR /usr/app
+
+# changed working directory
+
+RUN sh -c 'touch spring-boot-docker-app.jar'
+  
+# Run instruction
+
+ENTRYPOINT ["java","-jar","spring-boot-docker-app.jar"]
+
+# while runing the container ENTRYPOINT should execute.
+
+
+docker build -t myimage
+docker run -d -p 8080:8080 myimage 
+-d means detached 
+container port:8080
+host machine port : 8080   
